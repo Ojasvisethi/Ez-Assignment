@@ -77,7 +77,7 @@ def generate_verification_url(verification_token: str):
 
 @router.post('/login')
 def verify_client_user(req: ClientBase, db: Session = Depends(get_db)):
-    user = db.query(ClientUser).filter(ClientUser.username == req.username).first()
+    user = db.query(ClientUser).filter(ClientUser.email == req.email).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid credentials")
     if not Hash.verify(user.password, req.password):
