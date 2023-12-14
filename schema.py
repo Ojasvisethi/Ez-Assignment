@@ -8,7 +8,7 @@ class UserBase(BaseModel):
     password: str
 
 class ClientBase(BaseModel):
-    username: str
+    email: str
     password: str
 
 

@@ -40,8 +40,8 @@ async def signup(client_user: ClientBase,db : Session = Depends(get_db)):
     # Hash the password before storing it in the database
     verification_token = str(uuid.uuid4())
     new_user = ClientUser(
-        username=client_user.username,
-        email=client_user.username,
+        username=client_user.email,
+        email=client_user.email,
         password=Hash.bcrypt(client_user.password),
         verification_token=verification_token,
         is_verified = False
@@ -59,14 +59,14 @@ async def signup(client_user: ClientBase,db : Session = Depends(get_db)):
     # send_verification_email(client_user.email, client_user.verification_token)
     message = MessageSchema(
         subject="Verifying Email",
-        recipients=[client_user.username],
+        recipients=[client_user.email],
         body=f"Click on the following link to verify your email: {generate_verification_url(verification_token)}",
         subtype="plain"
     )
 
     try:
         await fastmail.send_message(message)
-        return {"message": "Verification email sent"}
+        return {"message": "Verification email sent on your emailid"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to send email: {str(e)}")
 
