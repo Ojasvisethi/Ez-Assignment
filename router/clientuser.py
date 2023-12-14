@@ -41,7 +41,7 @@ async def signup(client_user: ClientBase,db : Session = Depends(get_db)):
     verification_token = str(uuid.uuid4())
     new_user = ClientUser(
         username=client_user.username,
-        email=client_user.email,
+        email=client_user.username,
         password=Hash.bcrypt(client_user.password),
         verification_token=verification_token,
         is_verified = False
@@ -59,7 +59,7 @@ async def signup(client_user: ClientBase,db : Session = Depends(get_db)):
     # send_verification_email(client_user.email, client_user.verification_token)
     message = MessageSchema(
         subject="Verifying Email",
-        recipients=[client_user.email],
+        recipients=[client_user.username],
         body=f"Click on the following link to verify your email: {generate_verification_url(verification_token)}",
         subtype="plain"
     )
