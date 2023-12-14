@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+python-multipart
+sqlalchemy
+fastapi-mail
+bcrypt
+passlib
+python-jose
+requests
+pytest
+deta
+httpx
